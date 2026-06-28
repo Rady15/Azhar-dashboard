@@ -1,0 +1,253 @@
+{
+  "info": {
+    "_postman_id": "c3000000-0000-4000-8000-000000000003",
+    "name": "Compound Staff App API",
+    "description": "Complete API collection for Maintenance Staff Mobile App. Covers: Auth, Tasks & Job Management, Profile, Notifications.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "https://radykh-azhar.hf.space" },
+    { "key": "staff_token", "value": "" },
+    { "key": "refresh_token", "value": "" },
+    { "key": "staff_user_id", "value": "" },
+    { "key": "maintenance_request_id", "value": "" },
+    { "key": "notification_id", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Staff Login (by Phone)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"phone\": \"+966501111111\",\n  \"password\": \"Admin@1234\"\n}" },
+            "url": { "raw": "{{base_url}}/api/auth/staff/login", "host": ["{{base_url}}"], "path": ["api", "auth", "staff", "login"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"refresh_token\": \"{{refresh_token}}\"\n}" },
+            "url": { "raw": "{{base_url}}/api/auth/refresh", "host": ["{{base_url}}"], "path": ["api", "auth", "refresh"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Forgot Password",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"khalid@compound.com\"\n}" },
+            "url": { "raw": "{{base_url}}/api/auth/forgot-password", "host": ["{{base_url}}"], "path": ["api", "auth", "forgot-password"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Reset Password",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"token\": \"reset_token_here\",\n  \"password\": \"NewStaffPass123\"\n}" },
+            "url": { "raw": "{{base_url}}/api/auth/reset-password", "host": ["{{base_url}}"], "path": ["api", "auth", "reset-password"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Send 2FA OTP",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"phone\": \"+966501111111\"\n}" },
+            "url": { "raw": "{{base_url}}/api/auth/2fa/send", "host": ["{{base_url}}"], "path": ["api", "auth", "2fa", "send"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify 2FA OTP",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"phone\": \"+966501111111\",\n  \"otp\": \"123456\"\n}" },
+            "url": { "raw": "{{base_url}}/api/auth/2fa/verify", "host": ["{{base_url}}"], "path": ["api", "auth", "2fa", "verify"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Change Password",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{staff_token}}", "type": "string" }] },
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"current_password\": \"Admin@1234\",\n  \"new_password\": \"NewStaffPass123\"\n}" },
+            "url": { "raw": "{{base_url}}/api/auth/change-password", "host": ["{{base_url}}"], "path": ["api", "auth", "change-password"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Get My Profile",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{staff_token}}", "type": "string" }] },
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api/auth/me", "host": ["{{base_url}}"], "path": ["api", "auth", "me"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{staff_token}}", "type": "string" }] },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"refresh_token\": \"{{refresh_token}}\"\n}" },
+            "url": { "raw": "{{base_url}}/api/auth/logout", "host": ["{{base_url}}"], "path": ["api", "auth", "logout"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Update FCM Token",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{staff_token}}", "type": "string" }] },
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"fcm_token\": \"your_fcm_device_token_here\"\n}" },
+            "url": { "raw": "{{base_url}}/api/auth/fcm-token", "host": ["{{base_url}}"], "path": ["api", "auth", "fcm-token"] }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Tasks & Job Management",
+      "item": [
+        {
+          "name": "Get My Tasks",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{staff_token}}", "type": "string" }] },
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api/maintenance/staff/my-tasks", "host": ["{{base_url}}"], "path": ["api", "maintenance", "staff", "my-tasks"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Ticket Detail",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{staff_token}}", "type": "string" }] },
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api/maintenance/{{maintenance_request_id}}", "host": ["{{base_url}}"], "path": ["api", "maintenance", "{{maintenance_request_id}}"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Start Job",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{staff_token}}", "type": "string" }] },
+            "method": "PUT",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api/maintenance/{{maintenance_request_id}}/start", "host": ["{{base_url}}"], "path": ["api", "maintenance", "{{maintenance_request_id}}", "start"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Complete Job",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{staff_token}}", "type": "string" }] },
+            "method": "PUT",
+            "header": [],
+            "body": { "mode": "formdata", "formdata": [{ "key": "technician_notes", "value": "تم استبدال جلدة الحنفية وحل تسريب المياه بالكامل والموقع نظيف الآن", "type": "text" }, { "key": "tenant_signature", "value": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA...", "type": "text" }] },
+            "url": { "raw": "{{base_url}}/api/maintenance/{{maintenance_request_id}}/complete", "host": ["{{base_url}}"], "path": ["api", "maintenance", "{{maintenance_request_id}}", "complete"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Completed Jobs Archive",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{staff_token}}", "type": "string" }] },
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api/maintenance/staff/completed?page=1&limit=20", "host": ["{{base_url}}"], "path": ["api", "maintenance", "staff", "completed"], "query": [{ "key": "page", "value": "1" }, { "key": "limit", "value": "20" }] }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Profile",
+      "item": [
+        {
+          "name": "Get Profile & Stats",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{staff_token}}", "type": "string" }] },
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api/staff/{{staff_user_id}}", "host": ["{{base_url}}"], "path": ["api", "staff", "{{staff_user_id}}"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{staff_token}}", "type": "string" }] },
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"full_name\": \"Khalid Al Zahrani Staff\"\n}" },
+            "url": { "raw": "{{base_url}}/api/staff/{{staff_user_id}}", "host": ["{{base_url}}"], "path": ["api", "staff", "{{staff_user_id}}"] }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Notifications",
+      "item": [
+        {
+          "name": "Get My Notifications",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{staff_token}}", "type": "string" }] },
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api/notifications/my?unread_only=false", "host": ["{{base_url}}"], "path": ["api", "notifications", "my"], "query": [{ "key": "unread_only", "value": "false" }] }
+          },
+          "response": []
+        },
+        {
+          "name": "Mark Notification as Read",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{staff_token}}", "type": "string" }] },
+            "method": "PUT",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api/notifications/{{notification_id}}/read", "host": ["{{base_url}}"], "path": ["api", "notifications", "{{notification_id}}", "read"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Mark All as Read",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{staff_token}}", "type": "string" }] },
+            "method": "PUT",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api/notifications/read-all", "host": ["{{base_url}}"], "path": ["api", "notifications", "read-all"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Notification",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{staff_token}}", "type": "string" }] },
+            "method": "DELETE",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api/notifications/{{notification_id}}", "host": ["{{base_url}}"], "path": ["api", "notifications", "{{notification_id}}"] }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+نوع الحساب	اسم المستخدم (البريد الإلكتروني أو الجوال)	كلمة المرور
+Super Admin (المدير العام)	super@nakheel-compound.sa	Admin@1234
+Admin (مدير مجمع أزهار)	admin@nakheel-compound.sa	Admin@1234
+Tenant (المستأجر - محمد الحربي)	mharbi@email.com أو +966505000001	Admin@1234
+Staff (الفني - خالد الزهراني)	+966501111111	Admin@1234
+

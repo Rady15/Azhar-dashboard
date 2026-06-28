@@ -1,0 +1,369 @@
+{
+  "info": {
+    "_postman_id": "b2000000-0000-4000-8000-000000000002",
+    "name": "Compound Tenant App API",
+    "description": "Complete API collection for Tenant Mobile App. Covers: Auth, Profile, Lease & Payments, Maintenance, Complaints, Facilities, Announcements, Bus, Notifications.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "https://radykh-azhar.hf.space" },
+    { "key": "tenant_token", "value": "" },
+    { "key": "refresh_token", "value": "" },
+    { "key": "tenant_user_id", "value": "" },
+    { "key": "maintenance_request_id", "value": "" },
+    { "key": "notification_id", "value": "" },
+    { "key": "payment_id", "value": "" },
+    { "key": "dependent_id", "value": "" },
+    { "key": "facility_id", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Tenant Login (by Phone)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"identifier\": \"+966505000001\",\n  \"password\": \"Admin@1234\"\n}" },
+            "url": { "raw": "{{base_url}}/api/auth/tenant/login", "host": ["{{base_url}}"], "path": ["api", "auth", "tenant", "login"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Tenant Login (by Email)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"identifier\": \"mharbi@email.com\",\n  \"password\": \"Admin@1234\"\n}" },
+            "url": { "raw": "{{base_url}}/api/auth/tenant/login", "host": ["{{base_url}}"], "path": ["api", "auth", "tenant", "login"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"refresh_token\": \"{{refresh_token}}\"\n}" },
+            "url": { "raw": "{{base_url}}/api/auth/refresh", "host": ["{{base_url}}"], "path": ["api", "auth", "refresh"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Forgot Password",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"mharbi@email.com\"\n}" },
+            "url": { "raw": "{{base_url}}/api/auth/forgot-password", "host": ["{{base_url}}"], "path": ["api", "auth", "forgot-password"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Reset Password",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"token\": \"reset_token_here\",\n  \"password\": \"NewTenantPass123\"\n}" },
+            "url": { "raw": "{{base_url}}/api/auth/reset-password", "host": ["{{base_url}}"], "path": ["api", "auth", "reset-password"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Send 2FA OTP",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"mharbi@email.com\"\n}" },
+            "url": { "raw": "{{base_url}}/api/auth/2fa/send", "host": ["{{base_url}}"], "path": ["api", "auth", "2fa", "send"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify 2FA OTP",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"mharbi@email.com\",\n  \"otp\": \"123456\"\n}" },
+            "url": { "raw": "{{base_url}}/api/auth/2fa/verify", "host": ["{{base_url}}"], "path": ["api", "auth", "2fa", "verify"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Change Password",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{tenant_token}}", "type": "string" }] },
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"current_password\": \"Admin@1234\",\n  \"new_password\": \"NewTenantPass123\"\n}" },
+            "url": { "raw": "{{base_url}}/api/auth/change-password", "host": ["{{base_url}}"], "path": ["api", "auth", "change-password"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Get My Profile",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{tenant_token}}", "type": "string" }] },
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api/auth/me", "host": ["{{base_url}}"], "path": ["api", "auth", "me"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{tenant_token}}", "type": "string" }] },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"refresh_token\": \"{{refresh_token}}\"\n}" },
+            "url": { "raw": "{{base_url}}/api/auth/logout", "host": ["{{base_url}}"], "path": ["api", "auth", "logout"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Update FCM Token",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{tenant_token}}", "type": "string" }] },
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"fcm_token\": \"your_fcm_device_token_here\"\n}" },
+            "url": { "raw": "{{base_url}}/api/auth/fcm-token", "host": ["{{base_url}}"], "path": ["api", "auth", "fcm-token"] }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Profile",
+      "item": [
+        {
+          "name": "Update Profile",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{tenant_token}}", "type": "string" }] },
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"full_name_ar\": \"محمد الحربي المحدث\",\n  \"phone\": \"+966505000011\"\n}" },
+            "url": { "raw": "{{base_url}}/api/auth/profile", "host": ["{{base_url}}"], "path": ["api", "auth", "profile"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Full Tenant Profile",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{tenant_token}}", "type": "string" }] },
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api/tenants/{{tenant_user_id}}", "host": ["{{base_url}}"], "path": ["api", "tenants", "{{tenant_user_id}}"] }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Lease & Payments",
+      "item": [
+        {
+          "name": "Get My Active Lease",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{tenant_token}}", "type": "string" }] },
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api/tenants/{{tenant_user_id}}/lease", "host": ["{{base_url}}"], "path": ["api", "tenants", "{{tenant_user_id}}", "lease"] }
+          },
+          "response": []
+        },
+        {
+          "name": "List My Dependents",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{tenant_token}}", "type": "string" }] },
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api/tenants/{{tenant_user_id}}/dependents", "host": ["{{base_url}}"], "path": ["api", "tenants", "{{tenant_user_id}}", "dependents"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Get My Invoices & Payments",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{tenant_token}}", "type": "string" }] },
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api/payments/my", "host": ["{{base_url}}"], "path": ["api", "payments", "my"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Download Payment Receipt",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{tenant_token}}", "type": "string" }] },
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api/payments/my/receipts/{{payment_id}}", "host": ["{{base_url}}"], "path": ["api", "payments", "my", "receipts", "{{payment_id}}"] }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Maintenance",
+      "item": [
+        {
+          "name": "Submit Request",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{tenant_token}}", "type": "string" }] },
+            "method": "POST",
+            "header": [],
+            "body": { "mode": "formdata", "formdata": [{ "key": "category", "value": "plumbing", "type": "text" }, { "key": "title", "value": "حنفية المطبخ تسرب المياه", "type": "text" }, { "key": "description", "value": "هناك تسريب مستمر تحت المغسلة في المطبخ الرئيسي", "type": "text" }, { "key": "priority", "value": "high", "type": "text" }] },
+            "url": { "raw": "{{base_url}}/api/maintenance", "host": ["{{base_url}}"], "path": ["api", "maintenance"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Request Detail",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{tenant_token}}", "type": "string" }] },
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api/maintenance/{{maintenance_request_id}}", "host": ["{{base_url}}"], "path": ["api", "maintenance", "{{maintenance_request_id}}"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Rate Completed Job",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{tenant_token}}", "type": "string" }] },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"rating\": 5,\n  \"comment\": \"عمل ممتاز وسريع جداً\"\n}" },
+            "url": { "raw": "{{base_url}}/api/maintenance/{{maintenance_request_id}}/rate", "host": ["{{base_url}}"], "path": ["api", "maintenance", "{{maintenance_request_id}}", "rate"] }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Complaints",
+      "item": [
+        {
+          "name": "Submit Complaint",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{tenant_token}}", "type": "string" }] },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"category\": \"noise\",\n  \"subject\": \"صوت صاخب من الجار\",\n  \"description\": \"هناك أصوات تشغيل تلفاز عالية جداً بعد منتصف الليل\",\n  \"is_anonymous\": false\n}" },
+            "url": { "raw": "{{base_url}}/api/complaints", "host": ["{{base_url}}"], "path": ["api", "complaints"] }
+          },
+          "response": []
+        },
+        {
+          "name": "List My Complaints",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{tenant_token}}", "type": "string" }] },
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api/complaints/my/list", "host": ["{{base_url}}"], "path": ["api", "complaints", "my", "list"] }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Facilities",
+      "item": [
+        {
+          "name": "List Facilities",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{tenant_token}}", "type": "string" }] },
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api/facilities", "host": ["{{base_url}}"], "path": ["api", "facilities"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Book a Facility",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{tenant_token}}", "type": "string" }] },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"booking_date\": \"2026-07-05\",\n  \"start_time\": \"10:00\",\n  \"end_time\": \"12:00\",\n  \"notes\": \"حجز لاستخدام حمام السباحة\"\n}" },
+            "url": { "raw": "{{base_url}}/api/facilities/{{facility_id}}/book", "host": ["{{base_url}}"], "path": ["api", "facilities", "{{facility_id}}", "book"] }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Announcements & Bus",
+      "item": [
+        {
+          "name": "Get My Announcements",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{tenant_token}}", "type": "string" }] },
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api/announcements/my", "host": ["{{base_url}}"], "path": ["api", "announcements", "my"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Get My Bus Schedule",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{tenant_token}}", "type": "string" }] },
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api/bus/my-schedule", "host": ["{{base_url}}"], "path": ["api", "bus", "my-schedule"] }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Notifications",
+      "item": [
+        {
+          "name": "Get My Notifications",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{tenant_token}}", "type": "string" }] },
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api/notifications/my?unread_only=false", "host": ["{{base_url}}"], "path": ["api", "notifications", "my"], "query": [{ "key": "unread_only", "value": "false" }] }
+          },
+          "response": []
+        },
+        {
+          "name": "Mark Notification as Read",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{tenant_token}}", "type": "string" }] },
+            "method": "PUT",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api/notifications/{{notification_id}}/read", "host": ["{{base_url}}"], "path": ["api", "notifications", "{{notification_id}}", "read"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Mark All as Read",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{tenant_token}}", "type": "string" }] },
+            "method": "PUT",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api/notifications/read-all", "host": ["{{base_url}}"], "path": ["api", "notifications", "read-all"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Notification",
+          "request": {
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{tenant_token}}", "type": "string" }] },
+            "method": "DELETE",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api/notifications/{{notification_id}}", "host": ["{{base_url}}"], "path": ["api", "notifications", "{{notification_id}}"] }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
