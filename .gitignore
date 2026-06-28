@@ -1,12 +1,11 @@
-node_modules/
-dist/
-build/
+node_modules
+dist
+*.local
 .env
-.env.local
-*.log
-uploads/
 .DS_Store
 Thumbs.db
-backend/
-plan.md
+
+admin-dashboard
+backend
 New Text Document.txt
+plan.md
