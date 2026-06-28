@@ -7,3 +7,6 @@ build/
 uploads/
 .DS_Store
 Thumbs.db
+backend/
+plan.md
+New Text Document.txt
